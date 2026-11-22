@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digitalizando Brasil</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f8f5;
+      color: #1e3323;
+    }
+
+    /* MENU */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: #1b4332;
+      border-bottom: 2px solid #081c15;
+    }
+
+    nav {
+      max-width: 1200px;
+      margin: auto;
+      padding: 18px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #74c69d;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #74c69d;
+    }
+
+    /* INÍCIO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 20px 50px;
+      background: linear-gradient(135deg, #e8f5e9, #d8f3dc, #b7e4c7);
+    }
+
+    .hero-content {
+      max-width: 850px;
+    }
+
+    .hero h1 {
+      font-size: clamp(45px, 8vw, 85px);
+      margin-bottom: 20px;
+      color: #1b4332;
+    }
+
+    .hero h1 span {
+      color: #2d6a4f;
+    }
+
+    .hero p {
+      font-size: 20px;
+      line-height: 1.6;
+      margin-bottom: 35px;
+      color: #2d6a4f;
+    }
+
+    /* BOTÕES */
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      margin: 5px;
+      border: none;
+      border-radius: 30px;
+      background: #40916c;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      transform: translateY(-4px);
+      background: #2d6a4f;
+      color: #ffffff;
+    }
+
+    .btn-dark {
+      background: #1b4332;
+      color: #74c69d;
+      border: 1px solid #081c15;
+    }
+
+    .btn-dark:hover {
+      background: #081c15;
+      color: #95d5b2;
+    }
+
+    /* SEÇÕES */
+    section {
+      min-height: 100vh;
+      padding: 110px 25px 70px;
+      scroll-margin-top: 70px;
+    }
+
+    .container {
+      max-width: 1150px;
+      margin: auto;
+    }
+
+    .titulo {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .titulo h2 {
+      font-size: 45px;
+      margin-bottom: 15px;
+      color: #1b4332;
+    }
+
+    .titulo p {
+      color: #2d6a4f;
+      font-size: 18px;
+    }
+
+    /* SOBRE */
+    #sobre {
+      background: #e8f5e9;
+    }
+
+    .sobre-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .sobre-texto {
+      line-height: 1.8;
+      color: #1b4332;
+      font-size: 18px;
+    }
+
+    .sobre-box {
+      padding: 40px;
+      border-radius: 20px;
+      background: #ffffff;
+      border: 2px solid #52b788;
+      color: #1b4332;
+    }
+
+    .sobre-box h3 {
+      color: #1b4332;
+      margin-bottom: 15px;
+      font-size: 25px;
+    }
+
+    /* ARTISTAS */
+    #artistas {
+      background: #f4f8f5;
+    }
+
+    .artistas-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 2px solid #74c69d;
+      border-radius: 18px;
+      padding: 30px;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 20px rgba(27, 67, 50, 0.12);
+    }
+
+    .card .numero {
+      color: #40916c;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .card h3 {
+      font-size: 27px;
+      margin: 12px 0;
+      color: #1b4332;
+    }
+
+    .card h4 {
+      color: #52b788;
+      margin-bottom: 15px;
+    }
+
+    .card p {
+      color: #2d6a4f;
+      line-height: 1.7;
+    }
+
+    /* GALERIA */
+    #galeria {
+      background: #e8f5e9;
+    }
+
+    .galeria-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .obra {
+      height: 250px;
+      border-radius: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      font-size: 22px;
+      font-weight: bold;
+      background: #52b788;
+      transition: 0.3s;
+      cursor: pointer;
+      border: 2px solid #40916c;
+      color: #ffffff;
+      width: 100%;
+    }
+
+    .obra:hover {
+      transform: scale(1.03);
+      background: #40916c;
+      color: #ffffff;
+    }
+
+    /* MODAIS */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(8, 28, 21, 0.75);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      border: 3px solid #52b788;
+      border-radius: 20px;
+      max-width: 650px;
+      width: 100%;
+      padding: 30px;
+      position: relative;
+      animation: popup 0.3s ease-out;
+      color: #1b4332;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    @keyframes popup {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 28px;
+      color: #40916c;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .modal-content h3 {
+      font-size: 30px;
+      color: #1b4332;
+      margin-bottom: 15px;
+    }
+
+    .modal-content p {
+      color: #2d6a4f;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .modal-img-wrapper {
+      width: 100%;
+      height: 250px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #b7e4c7;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f4f8f5;
+    }
+
+    .modal-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* CONTRIBUA */
+    #contribua {
+      background: #f4f8f5;
+      text-align: center;
+    }
+
+    .contribua-box {
+      max-width: 800px;
+      margin: auto;
+      background: #ffffff;
+      padding: 50px;
+      border-radius: 20px;
+      border: 2px solid #74c69d;
+    }
+
+    .contribua-box h2 {
+      color: #1b4332;
+    }
+
+    .contribua-box p {
+      color: #2d6a4f;
+      line-height: 1.8;
+      font-size: 18px;
+      margin: 20px 0 30px;
+    }
+
+    /* RODAPÉ */
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #1b4332;
+      color: #ffffff;
+      border-top: 2px solid #081c15;
+    }
+
+    footer strong {
+      color: #74c69d;
+    }
+
+    /* ANÚNCIOS */
+    .modal-anuncio-content {
+      border-color: #2d6a4f;
+      background: #f4f8f5;
+      text-align: left;
+    }
+
+    .anuncio-timer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px dashed #74c69d;
+    }
+
+    .tag-anuncio {
+      background: #1b4332;
+      color: #74c69d;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    #timer-contador {
+      font-weight: bold;
+      color: #40916c;
+      font-size: 16px;
+    }
+
+    #anuncio-texto h4 {
+      color: #1b4332;
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    #anuncio-texto p {
+      color: #2d6a4f;
+      font-size: 15px;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    /* RESPONSIVO */
+    @media (max-width: 800px) {
+      nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav ul {
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .sobre-content,
+      .artistas-grid,
+      .galeria-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 48px;
+      }
+
+      .titulo h2 {
+        font-size: 35px;
+      }
+
+      .contribua-box {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- MENU -->
+  <header>
+    <nav>
+      <div class="logo">DIGITALIZANDO BRASIL</div>
+      <ul>
+        <li><a href="#inicio">Início</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#artistas">Artistas</a></li>
+        <li><a href="#galeria">Galeria</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- INÍCIO -->
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <h1>Digitalizando <span>Brasil</span></h1>
+      <p>
+        Uma viagem pela arte brasileira, dando espaço para artistas
+        que possuem histórias incríveis, mas que ainda não recebem
+        o reconhecimento que merecem.
+      </p>
+      <a href="#artistas" class="btn">Conhecer artistas</a>
+      <a href="#sobre" class="btn btn-dark">Saiba mais</a>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="container">
+      <div class="titulo">
+        <h2>Sobre o projeto</h2>
+        <p>Conheça a ideia por trás do Digitalizando Brasil.</p>
+      </div>
+
+      <div class="sobre-content">
+        <div class="sobre-texto">
+          <p>
+            O <strong>Digitalizando Brasil</strong> é um projeto criado
+            para valorizar a diversidade da arte brasileira.
+          </p>
+          <br>
+          <p>
+            Nosso objetivo é utilizar a tecnologia para apresentar
+            artistas, estilos e histórias que muitas vezes não recebem
+            a mesma atenção que grandes nomes da arte brasileira.
+          </p>
+          <br>
+          <p>
+            Aqui você pode conhecer diferentes trajetórias e descobrir
+            como a arte brasileira é muito maior e mais diversa do que
+            normalmente aprendemos.
+          </p>
+        </div>
+
+        <div class="sobre-box">
+          <h3>🎨 Nossa missão</h3>
+          <p>
+            Tornar a arte brasileira mais acessível, valorizando
+            diferentes culturas, regiões, estilos e artistas.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTISTAS -->
+  <section id="artistas">
+    <div class="container">
+      <div class="titulo">
+        <h2>Artistas para conhecer</h2>
+        <p>Grandes talentos que merecem ser descobertos.</p>
+      </div>
+
+      <div class="artistas-grid">
+        <div class="card">
+          <span class="numero">01 — ARTISTA</span>
+          <h3>Maria Auxiliadora</h3>
+          <h4>Arte popular brasileira</h4>
+          <p>
+            Maria Auxiliadora da Silva foi uma artista mineira conhecida
+            por suas pinturas cheias de cores e representações do
+            cotidiano. Sua produção retratava pessoas, festas,
+            costumes e cenas da vida brasileira.
+          </p>
+        </div>
+
+        <div class="card">
+          <span class="numero">02 — ARTISTA</span>
+          <h3>Rubem Valentim</h3>
+          <h4>Abstração e símbolos brasileiros</h4>
+          <p>
+            Rubem Valentim desenvolveu uma linguagem artística própria,
+            utilizando formas geométricas e símbolos relacionados às
+            culturas afro-brasileiras. Seu trabalho ajudou a criar uma
+            importante conexão entre arte, cultura e identidade.
+          </p>
+        </div>
+
+        <div class="card">
+          <span class="numero">03 — ARTISTA</span>
+          <h3>Mestre Didi</h3>
+          <h4>Arte e cultura afro-brasileira</h4>
+          <p>
+            Mestre Didi foi artista e escritor baiano. Sua produção
+            artística possui forte relação com tradições e símbolos
+            da cultura afro-brasileira, especialmente ligados à
+            tradição iorubá.
+          </p>
+        </div>
+
+        <div class="card">
+          <span class="numero">04 — ARTISTA</span>
+          <h3>Maria Martins</h3>
+          <h4>Escultura surrealista</h4>
+          <p>
+            Maria Martins foi uma importante escultora brasileira.
+            Seu trabalho explorou formas humanas, mitologia,
+            natureza e temas ligados à identidade. Sua carreira
+            também teve destaque internacional.
+          </p>
+        </div>
+
+        <div class="card">
+          <span class="numero">05 — ARTISTA</span>
+          <h3>Vik Muniz</h3>
+          <h4>Arte contemporânea e materiais inusitados</h4>
+          <p>
+            Vik Muniz é mundialmente reconhecido por criar ilusões ópticas e
+            obras de arte usando materiais inusitados, como lixo, chocolate,
+            açúcar e poeira, transformando o efêmero em fotografia.
+          </p>
+        </div>
+
+        <div class="card">
+          <span class="numero">06 — ARTISTA</span>
+          <h3>Leo Piló</h3>
+          <h4>Bioarte e resíduos urbanos</h4>
+          <p>
+            Leo Piló é um artista visual mineiro focado em sustentabilidade.
+            Seu trabalho utiliza resíduos descartados e técnicas de
+            reciclagem para criar esculturas e instalações que provocam
+            reflexões sobre o consumo e o meio ambiente.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <section id="galeria">
+    <div class="container">
+      <div class="titulo">
+        <h2>Galeria Digital</h2>
+        <p>Explore diferentes caminhos da arte brasileira.</p>
+      </div>
+
+      <div class="galeria-grid">
+        <button class="obra" onclick="openModal('modal-popular')">ARTE POPULAR</button>
+        <button class="obra" onclick="openModal('modal-abstracao')">ABSTRAÇÃO</button>
+        <button class="obra" onclick="openModal('modal-moderna')">ARTE MODERNA</button>
+        <button class="obra" onclick="openModal('modal-afro')">CULTURA AFRO-BRASILEIRA</button>
+        <button class="obra" onclick="openModal('modal-contemporanea')">ARTE CONTEMPORÂNEA</button>
+        <button class="obra" onclick="openModal('modal-identidade')">IDENTIDADE BRASILEIRA</button>
+        <button class="obra" onclick="openModal('modal-biodegradavel')">ARTES BIODEGRADÁVEIS</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAIS DA GALERIA -->
+
+  <div id="modal-popular" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('modal-popular')">&times;</span>
+      <h3>Arte Popular</h3>
+      <div class="modal-img-wrapper">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuumLex_Phty1BdrknCoqVdDM2-DzcZblL9nvds3hgQA&s=10" alt="Arte Popular Brasileira">
+      </div>
+      <p>
+        A arte popular brasileira reflete as tradições, festividades e a vida cotidiana de diversas regiões do país. Expressa através da pintura naïf, cerâmica e xilogravura, destaca a essência e a sensibilidade do povo.
+      </p>
+    </div>
+  </div>
+
+  <div id="modal-abstracao" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('modal-abstracao')">&times;</span>
+      <h3>Abstração</h3>
+      <div class="modal-img-wrapper">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxo1FxZ_BQRgdh48DeF2fb__VefdPLs8IQSBO-bvAKtQ&s=10" alt="Arte Abstrata Brasileira">
+      </div>
+      <p>
+        No Brasil, o movimento abstracionista utilizou formas geométricas, cores vibrantes e estruturas conceituais para redefinir o espaço pictórico, tendo nomes como Rubem Valentim integrando símbolos culturais à geometria.
+      </p>
+    </div>
+  </div>
+
+  <div id="modal-moderna" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('modal-moderna')">&times;</span>
+      <h3>Arte Moderna</h3>
+      <div class="modal-img-wrapper">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-nNwyc9621fgEkZ5c5NMA3mkH6SfVxMzF0FU3iEpTxQ&s=10" alt="Arte Moderna Brasileira">
+      </div>
+      <p>
+        Marcada pelo marco da Semana de Arte Moderna de 1922, buscou quebrar com os padrões europeus e construir uma estética verdadeiramente brasileira, antropofágica e inovadora.
+      </p>
+    </div>
+  </div>
+
+  <div id="modal-afro" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('modal-afro')">&times;</span>
+      <h3>Cultura Afro-Brasileira</h3>
+      <div class="modal-img-wrapper">
+        <img src="https://artebrasileiros.com.br/wp-content/uploads/2020/12/Heitor-dos-Prazeres.jpg" alt="Obra de Heitor dos Prazeres - Cultura Afro-Brasileira">
+      </div>
+      <p>
+        Com raízes profundas na ancestralidade, a arte afro-brasileira combina elementos sagrados, simbologia religiosa e resistência cultural através de esculturas, relevos e artes plásticas vibrantes.
+      </p>
+    </div>
+  </div>
+
+  <div id="modal-contemporanea" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('modal-contemporanea')">&times;</span>
+      <h3>Arte Contemporânea</h3>
+      <div class="modal-img-wrapper">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKB0NKKf_8iCMmtKzOAz406kEmlx2jNM7v3twMBs_SCA&s=10" alt="Arte Contemporânea Brasileira">
+      </div>
+      <p>
+        Das instalações urbanas até performances e mídias digitais, a arte contemporânea no Brasil aborda questões sociais, de identidade, tecnologia e meio ambiente de forma provocativa.
+      </p>
+    </div>
+  </div>
+
+  <div id="modal-identidade" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('modal-identidade')">&times;</span>
+      <h3>Identidade Brasileira</h3>
+      <div class="modal-img-wrapper">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMh1FZanmU2ara5fGf6bVWLHi53sLmDN1gwegF8Y6VvA&s=10" alt="Identidade Brasileira na Arte">
+      </div>
+      <p>
+        Uma busca contínua por retratar a diversidade étnica, a fauna, a flora e a pluralidade cultural que tornam a produção artística do Brasil única no mundo.
+      </p>
+    </div>
+  </div>
+
+  <div id="modal-biodegradavel" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('modal-biodegradavel')">&times;</span>
+      <h3>Artes Biodegradáveis</h3>
+      <div class="modal-img-wrapper">
+        <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80" alt="Artes Biodegradáveis e Ecologia">
+      </div>
+      <p>
+        Unindo arte, consciência ambiental e sustentabilidade, as artes biodegradáveis utilizam elementos orgânicos, pigmentos naturais, barro e resíduos recicláveis. Essa vertente propõe obras efêmeras que retornam à natureza sem agredi-la, instigando o público a refletir sobre a preservação do planeta.
+      </p>
+    </div>
+  </div>
+
+  <!-- CONTRIBUA -->
+  <section id="contribua">
+    <div class="container">
+      <div class="titulo">
+        <h2>Valorize a arte</h2>
+        <p>A arte brasileira está em todos os lugares.</p>
+      </div>
+
+      <div class="contribua-box">
+        <h2>🔎 Continue descobrindo</h2>
+        <p>
+          Existem muitos artistas brasileiros com histórias,
+          técnicas e estilos incríveis que ainda são pouco conhecidos.
+          Conhecer essas pessoas também é uma forma de valorizar
+          nossa cultura.
+        </p>
+        <a href="#artistas" class="btn">Voltar aos artistas</a>
+        <a href="#inicio" class="btn btn-dark">Voltar ao início</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <p>
+      © 2026 <strong>Digitalizando Brasil</strong> —
+      Arte, cultura e tecnologia.
+    </p>
+  </footer>
+
+  <!-- MODAL DE ANÚNCIOS -->
+  <div id="modal-anuncio" class="modal">
+    <div class="modal-content modal-anuncio-content">
+      <div class="anuncio-timer">
+        <span class="tag-anuncio">Propaganda</span>
+        <span id="timer-contador">10s</span>
+      </div>
+
+      <div id="anuncio-texto"></div>
+
+      <button id="btn-fechar-anuncio" class="btn btn-dark"
+        style="margin-top: 15px; width: 100%; display: none;"
+        onclick="fecharAnuncioManual()">
+        Fechar Anúncio
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // MODAIS DA GALERIA
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = 'flex';
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    // Fecha os modais da galeria ao clicar fora do conteúdo.
+    window.addEventListener('click', function(event) {
+      if (
+        event.target.classList.contains('modal') &&
+        event.target.id !== 'modal-anuncio'
+      ) {
+        event.target.style.display = 'none';
+      }
+    });
+
+    // ANÚNCIOS DE 10 SEGUNDOS
+    const anuncios = [
+      `<h4>🌱 SABIA?</h4>
+       <p>Papel usado pode virar flores, cartões e enfeites! 📄🌸</p>
+       <p>♻️ <strong>Reutilize, crie e evite o desperdício!</strong></p>`,
+
+      `<h4>🌎 SABIA?</h4>
+       <p>Garrafas podem ganhar uma nova função como vasos e objetos decorativos!</p>
+       <p>♻️ <strong>Dê novos usos aos materiais e ajude a reduzir o desperdício!</strong></p>`,
+
+      `<h4>🎨 VALORIZE A ARTE!</h4>
+       <p>A arte brasileira reúne histórias, culturas e talentos de diferentes regiões.</p>
+       <p><strong>Conheça novos artistas e compartilhe suas obras!</strong></p>`,
+
+      `<h4>🌳 CUIDE DO PLANETA!</h4>
+       <p>Separar materiais recicláveis facilita o reaproveitamento e reduz o desperdício.</p>
+       <p>♻️ <strong>Pequenas atitudes também fazem a diferença!</strong></p>`
+    ];
+
+    let intervaloAnuncio;
+    let anuncioAtual = 0;
+
+    function mostrarAnuncio() {
+      const modal = document.getElementById('modal-anuncio');
+      const texto = document.getElementById('anuncio-texto');
+      const contador = document.getElementById('timer-contador');
+      const botao = document.getElementById('btn-fechar-anuncio');
+
+      texto.innerHTML = anuncios[anuncioAtual];
+      anuncioAtual = (anuncioAtual + 1) % anuncios.length;
+
+      modal.style.display = 'flex';
+      botao.style.display = 'none';
+
+      let segundos = 10;
+      contador.textContent = segundos + 's';
+
+      clearInterval(intervaloAnuncio);
+
+      intervaloAnuncio = setInterval(function() {
+        segundos--;
+        contador.textContent = segundos + 's';
+
+        if (segundos <= 0) {
+          clearInterval(intervaloAnuncio);
+          botao.style.display = 'block';
+        }
+      }, 1000);
+    }
+
+    function fecharAnuncioManual() {
+      document.getElementById('modal-anuncio').style.display = 'none';
+      clearInterval(intervaloAnuncio);
+    }
+
+    // Exibe o primeiro anúncio três segundos após o carregamento.
+    window.addEventListener('load', function() {
+      setTimeout(mostrarAnuncio, 3000);
+    });
+  </script>
+
+</body>
+</html>
